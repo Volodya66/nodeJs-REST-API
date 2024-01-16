@@ -1,21 +1,11 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-// const mongoose = require("mongoose");
-
-// const DB_HOST =
-//   "mongodb+srv://phoneBook:phoneBook@cluster0.auojrsw.mongodb.net/Phone_book_reader?retryWrites=true&w=majority";
-
-// mongoose.set("strictQuery", false);
-
-// mongoose
-//   .connect(DB_HOST)
-//   .then(() => console.log("Database connection success"))
-//   .catch((error) => console.log(error.message));
-
-const contactsRouter = require("./routes/api/contacts");
+require("dotenv").config();
 
 const app = express();
+
+const contactsRouter = require("./routes/api/contacts");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
