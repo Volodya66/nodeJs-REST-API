@@ -71,26 +71,30 @@ const resendVerifyEmail = async (req, res) => {
     throw HttpError(401, " Email not found");
   }
 
-  if (!verify) {
+  // if (!verify) {
+  //   throw HttpError(400, "Verification has already been passed");
+  // }
+
+  if (verify) {
     throw HttpError(400, "Verification has already been passed");
   }
-
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click to confirm your email</a>`,
   };
 
   await nodemailerEmail(verifyEmail);
 
-  res.json({
-    message: "verify email send success",
+  res.status(200).json({
+    message: "Verify email send success",
   });
 };
 
 const login = async (req, res) => {
   const { email, password, verify } = req.body;
   const user = await User.findOne({ email });
+  console.log("user: ", user);
 
   if (!user) {
     throw HttpError(401, " Email or password invalid");
