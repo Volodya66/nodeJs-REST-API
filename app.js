@@ -1,9 +1,35 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+// const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
+
+// const { META_PASSWORD } = process.env;
+
+// const nodemailerConfig = {
+//   host: "smtp.meta.ua",
+//   port: 465,
+//   secure: true,
+//   auth: {
+//     user: "volodymyr.VP@meta.ua",
+//     pass: META_PASSWORD,
+//   },
+// };
+
+// const transport = nodemailer.createTransport(nodemailerConfig);
+// const emailOptions = {
+//   from: "volodymyr.VP@meta.ua",
+//   to: "volodya1015@gmail.com",
+//   subject: "Nodemailer test",
+//   text: "Привіт. Ми тестуємо надсилання листів! і",
+// };
+
+// transport
+//   .sendMail(emailOptions)
+//   .then((info) => console.log(info))
+//   .catch((err) => console.log(err));
 
 const authRouter = require("./routes/api/auth");
 const contactsRouter = require("./routes/api/contacts");
