@@ -35,7 +35,7 @@ const register = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify em@il</a>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
   };
 
   await nodemailerEmail(verifyEmail);
@@ -56,8 +56,8 @@ const verifyEmail = async (req, res) => {
     throw HttpError(404, "User not found");
   }
   await User.findByIdAndUpdate(user._id, {
+    verificationToken: null,
     verify: true,
-    verificationToken: "",
   });
 
   res.status(200).json({ message: "Verification successful" });
@@ -92,7 +92,7 @@ const resendVerifyEmail = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password, verify } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
   console.log("user: ", user);
 
@@ -100,7 +100,7 @@ const login = async (req, res) => {
     throw HttpError(401, " Email or password invalid");
   }
 
-  if (!verify) {
+  if (!user.verify) {
     throw HttpError(401, "Email not verify");
   }
 
